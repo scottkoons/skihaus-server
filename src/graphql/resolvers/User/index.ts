@@ -21,7 +21,7 @@ export const userResolvers: IResolvers = {
         const user = await db.users.findOne({ _id: id });
 
         if (!user) {
-          throw new Error("user can't be found");
+          throw new Error("User not found");
         }
 
         const viewer = await authorize(db, req);
