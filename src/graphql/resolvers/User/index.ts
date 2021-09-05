@@ -84,18 +84,30 @@ export const userResolvers: IResolvers = {
       try {
         const data: UserListingsData = {
           total: 0,
-          result: []
+          result: [],
         };
 
         let cursor = await db.listings.find({
-          _id: { $in: user.listings }
+          _id: { $in: user.listings },
         });
 
         cursor = cursor.skip(page > 0 ? (page - 1) * limit : 0);
         cursor = cursor.limit(limit);
 
+        console.log("----------------------------");
+        console.log(`page is: ${page} and limit is: ${limit}`);
+        console.log(`cursor.limit is: ${cursor.limit}`);
+        console.log("----------------------------");
+
+
         data.total = await cursor.count();
         data.result = await cursor.toArray();
+
+        console.log("----------------------------");
+        console.log(`data.total is ${data.total}`);
+        console.log(`data.result is ${data.result}`);
+        console.log("----------------------------");
+
 
         return data;
       } catch (error) {
