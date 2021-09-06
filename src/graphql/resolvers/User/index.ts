@@ -91,6 +91,8 @@ export const userResolvers: IResolvers = {
           _id: { $in: user.listings },
         });
 
+        data.total = await cursor.count();
+
         cursor = cursor.skip(page > 0 ? (page - 1) * limit : 0);
         cursor = cursor.limit(limit);
 
@@ -100,7 +102,7 @@ export const userResolvers: IResolvers = {
         console.log("----------------------------");
 
 
-        data.total = await cursor.count();
+
         data.result = await cursor.toArray();
 
         console.log("----------------------------");
